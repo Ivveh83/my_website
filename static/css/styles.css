@@ -11048,6 +11048,84 @@ p {
   }
 }
 
+.blur-on-scroll {
+    filter: blur(10px);  /* Börjar suddig */
+    transition: filter 1s ease-out;
+}
+
+.blur-on-scroll.scrolled {
+    filter: blur(0px);  /* Blir skarp */
+}
+
+.product-item-img {
+    transform: scale(0.7);  /* Startar mindre */
+    opacity: 0;  /* Dold från början */
+    transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+.product-item-img.in-view {
+    transform: scale(1);  /* Växer till full storlek */
+    opacity: 1;  /* Blir synlig */
+}
+
+
+
+/* --- ANIMERA RUBRIKERNA FRÅN HÖGER/VÄNSTER --- */
+.product-item-title {
+    opacity: 0;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+/* Svep in från vänster */
+.product-item-title.left {
+    transform: translateX(-100%);
+}
+
+/* Svep in från höger */
+.product-item-title.right {
+    transform: translateX(100%);
+}
+
+/* När de blir synliga */
+.product-item-title.in-view {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* --- ANIMERA BILDERNA (ZOOM-IN) --- */
+.product-item-img {
+    transform: scale(0.8);
+    opacity: 0;
+    transition: transform 1.2s ease-out, opacity 1.2s ease-out;
+}
+
+/* När bilderna blir synliga */
+.product-item-img.in-view {
+    transform: scale(1);
+    opacity: 1;
+}
+
+
+
+/* --- ANIMERA TEXTBOXARNA (VÄXER VID SCROLL) --- */
+.product-item-description {
+    transform: scale(0.5);  /* Börjar i halv storlek */
+    opacity: 0;
+    transition: transform 1s ease-out, opacity 1s ease-out;
+}
+
+/* När de blir synliga */
+.product-item-description.in-view {
+    transform: scale(1);
+    opacity: 1;
+}
+
+
+.page-section {
+    margin-bottom: 200px; /* Justera efter behov */
+}
+
+
 .cta {
   padding-top: 5rem;
   padding-bottom: 5rem;
@@ -11071,7 +11149,7 @@ p {
 }
 
 .footer {
-  background-color: rgba(47, 23, 15, 0.9);
+  background: linear-gradient(to top, rgba(47, 23, 15, 0.9) 80%, rgba(47, 23, 15, 0));
 }
 
 .my-img {
@@ -11161,6 +11239,11 @@ p {
 
 .custom-gradient-bg {
   background: linear-gradient(45deg, #D81D8C -20%, #F8EC04 20%, #D81D8C 130%); /* Gradient från lila till blå */
+}
+
+.header-bar {
+    background: linear-gradient(to bottom, rgba(47, 23, 15, 0.9) 80%, rgba(47, 23, 15, 0));
+    padding: 40px 0;
 }
 
 

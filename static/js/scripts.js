@@ -67,3 +67,76 @@ function generateParticles() {
 
 // Lägg till eventlyssnare för att skapa partiklar vid hover
 document.querySelector('.particle-container').addEventListener('mouseenter', generateParticles);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const image = document.querySelector(".blur-on-scroll");
+
+    window.addEventListener("scroll", function () {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition > 250) {  // Justera detta värde beroende på när du vill att effekten ska slå in
+            image.classList.add("scrolled");
+        } else {
+            image.classList.remove("scrolled");
+        }
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".product-item-img");
+
+    function checkVisibility() {
+        images.forEach(img => {
+            const rect = img.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {  // Justera värdet för att trigga tidigare/senare
+                img.classList.add("in-view");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", checkVisibility);
+    checkVisibility();  // Kör direkt för bilder som redan är synliga
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const titles = document.querySelectorAll(".product-item-title");
+    const images = document.querySelectorAll(".product-item-img");
+
+    function checkVisibility() {
+        titles.forEach(title => {
+            const rect = title.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {
+                title.classList.add("in-view");
+            }
+        });
+
+        images.forEach(img => {
+            const rect = img.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {
+                img.classList.add("in-view");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", checkVisibility);
+    checkVisibility();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const descriptions = document.querySelectorAll(".product-item-description");
+
+    function checkVisibility() {
+        descriptions.forEach(desc => {
+            const rect = desc.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.8) {
+                desc.classList.add("in-view");
+            }
+        });
+    }
+
+    window.addEventListener("scroll", checkVisibility);
+    checkVisibility();
+});
