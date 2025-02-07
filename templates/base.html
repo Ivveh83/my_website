@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
     {% block head %}
-            <meta name="author" content="" />
-        <title>Business Casual - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <meta name="author" content=""/>
+    <title>Business Casual - Start Bootstrap Theme</title>
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico"/>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
 
-        <link href="static/css/styles.css" rel="stylesheet" />
+    <link href="static/css/styles.css" rel="stylesheet"/>
 
     {% endblock %}
 
@@ -25,35 +26,50 @@
     <header>
 
         <div class="row">
-    <div class="col-12">
-        <img src="static/img/me_too_too (2).png" alt="My Image" class="img-fluid mx-auto d-block pt-5" width="900" height="300">
-    </div>
-    <div class="col-12">
-        <img src="static/img/python_developer.png" alt="My Image" class="img-fluid mx-auto d-block mb-5 img-zoom" width="400" height="150">
-    </div>
-</div>
-
-
-<!--            <h1 class="site-heading text-center text-faded d-none d-lg-block">-->
-<!--                <span class="site-heading-upper text-primary mb-3">A Free Bootstrap Business Theme</span>-->
-<!--                <span class="site-heading-lower">Business Casual</span>-->
-<!--            </h1>-->
-        </header>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">Start Bootstrap</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                       <li class="nav-item px-lg-4 shimmer-text animate__animated"><a class="nav-link text-uppercase" href="{{ url_for('home') }}">Home</a></li>
-                        <li class="nav-item px-lg-4 shimmer-text shimmer-text animate__animated"><a class="nav-link text-uppercase" href="{{ url_for('about') }}">About</a></li>
-                        <li class="nav-item px-lg-4 shimmer-text shimmer-text animate__animated"><a class="nav-link text-uppercase" href="{{ url_for('products') }}">Products</a></li>
-                        <li class="nav-item px-lg-4 shimmer-text shimmer-text animate__animated"><a class="nav-link text-uppercase" href="{{ url_for('store') }}">Store</a></li>
-                    </ul>
-                </div>
+    <div class="col-12 image-container d-flex justify-content-center mt-5">
+        <a href="{{ url_for('about') }}">
+            <div class="particle-container">
+                <img src="static/img/me_too_too (2).png" alt="My Image"
+                     class="img-fluid glow-effect" width="800">
+                <div class="particles"></div>
             </div>
-        </nav>
+        </a>
+    </div>
+            <div class="col-12"><a href={{ url_for('products') }}>
+                <img src="static/img/python_developer.png" alt="My Image"
+                     class="img-fluid mx-auto d-block mt-5 mb-3 img-zoom" width="350"></a>
+            </div>
+        </div>
+
+
+        <!--            <h1 class="site-heading text-center text-faded d-none d-lg-block">-->
+        <!--                <span class="site-heading-upper text-primary mb-3">A Free Bootstrap Business Theme</span>-->
+        <!--                <span class="site-heading-lower">Business Casual</span>-->
+        <!--            </h1>-->
+    </header>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4 mb-5" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">Start Bootstrap</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item px-lg-4 shimmer-text animate__animated"><a class="nav-link text-uppercase"
+                                                                                   href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item px-lg-4 shimmer-text shimmer-text animate__animated"><a
+                            class="nav-link text-uppercase" href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-item px-lg-4 shimmer-text shimmer-text animate__animated"><a
+                            class="nav-link text-uppercase" href="{{ url_for('products') }}">Products</a></li>
+                    <li class="nav-item px-lg-4 shimmer-text shimmer-text animate__animated"><a
+                            class="nav-link text-uppercase" href="{{ url_for('store') }}">Store</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     {% endblock %}
 </head>
 <body>
@@ -63,15 +79,15 @@
 <!-- Optional JavaScript -->
 {{ bootstrap.load_js() }}
 {% endblock %}
-        <footer class="footer text-faded text-center py-5">
-            <div class="container"><p class="m-0 small">Copyright &copy; Your Website 2023</p>
-            <a href="https://www.textstudio.com/">Font generator</a>
-            </div>
+<footer class="footer text-faded text-center py-5">
+    <div class="container"><p class="m-0 small">Copyright &copy; Your Website 2023</p>
+        <a href="https://www.textstudio.com/">Font generator</a>
+    </div>
 
-        </footer>
-        <!-- Bootstrap core JS-->
+</footer>
+<!-- Bootstrap core JS-->
 <!--        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>-->
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
+<!-- Core theme JS-->
+<script src="static/js/scripts.js"></script>
 </body>
 </html>

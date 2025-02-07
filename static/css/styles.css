@@ -10917,7 +10917,7 @@ p {
 }
 @media (min-width: 992px) {
   #mainNav .navbar-nav .nav-item .nav-link {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover {
     color: rgba(255, 255, 255, 0.4);
@@ -10939,6 +10939,70 @@ p {
   }
 }
 
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.particle-container {
+    position: relative;
+    display: inline-block;
+}
+
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Gör så att partiklarna inte stör musinteraktioner */
+}
+
+.particle {
+    position: absolute;
+    background-color: rgba(0, 255, 255, 0.8); /* Neonblå färg, halvgenomskinlig */
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    animation: moveParticle 2s linear forwards;
+}
+
+@keyframes moveParticle {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y));
+        opacity: 0; /* Partiklarna försvinner gradvis */
+    }
+}
+
+
+.glow-effect {
+    box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
+    animation: glowPulse 2s infinite alternate;
+}
+
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff; }
+    100% { box-shadow: 0 0 25px #ff00ff, 0 0 50px #ff00ff; }
+}
+
+.glow-effect_blue {
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;  /* Mindre intensiva glödvärden */
+    animation: glowPulseBlue 3s infinite alternate; /* Längre tid för att göra det mindre intensivt */
+}
+
+@keyframes glowPulseBlue {
+    0% {
+        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; /* Mindre glöd */
+    }
+    100% {
+        box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 60px #00ffff; /* Mindre intensiv glöd */
+    }
+}
 
 
 .shimmer-text {
@@ -11031,6 +11095,9 @@ p {
     background-blend-mode: overlay;
 }
 
+
+
+/* Zoom-in och ut animation */
 @keyframes zoomInOut {
     0% {
         transform: scale(1); /* Ursprunglig storlek */
@@ -11043,37 +11110,60 @@ p {
     }
 }
 
-.img-zoom {
-    animation: zoomInOut 5s infinite; /* 5 sekunder lång, upprepas oändligt */
+/* Shake-animation */
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }  /* Luta åt vänster */
+    50% { transform: rotate(10deg); }   /* Luta åt höger */
+    75% { transform: rotate(-10deg); }  /* Luta åt vänster */
+    100% { transform: rotate(0deg); }   /* Återgå till normalt läge */
 }
 
+/* Bild med zoom-in och ut animation */
+.img-zoom {
+    animation: zoomInOut 5s infinite; /* 5 sekunder lång, upprepas oändligt */
+    transition: transform 0.2s ease; /* Lägger till smidig övergång för shake-effekten */
+}
+
+/* Shake-effekten vid hover */
+.img-zoom:hover {
+    animation: shake 0.5s ease;
+}
 
 .intro {
   position: relative;
 }
 @media (min-width: 992px) {
   .intro .intro-img {
-    width: 75%;
+    width: 55%;
     float: right;
+    margin-top: -20px;
+    position: relative;
   }
   .intro .intro-text {
     left: 0;
     width: 60%;
-    margin-top: 3rem;
+    margin-top: 1rem;
     position: absolute;
   }
   .intro .intro-text .intro-button {
     width: 100%;
-    left: 0;
+    left: 5;
     position: absolute;
     bottom: -2rem;
   }
 }
 @media (min-width: 1200px) {
   .intro .intro-text {
-    width: 45%;
+    width: 50%;
   }
 }
+
+.custom-gradient-bg {
+  background: linear-gradient(45deg, #D81D8C -20%, #F8EC04 20%, #D81D8C 130%); /* Gradient från lila till blå */
+}
+
+
 
 @media (min-width: 992px) {
   .product-item .product-item-title {
