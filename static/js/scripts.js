@@ -68,6 +68,14 @@ function generateParticles() {
 // Lägg till eventlyssnare för att skapa partiklar vid hover
 document.querySelector('.particle-container').addEventListener('mouseenter', generateParticles);
 
+// Aktivera partiklar automatiskt vid sidladdning (3 gånger)
+document.addEventListener("DOMContentLoaded", function() {
+    for (let i = 0; i < 3; i++) { // Kör 3 gånger vid sidladdning
+        setTimeout(generateParticles, i * 600); // Skjuter iväg partiklar varje 1.5 sekund
+    }
+});
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     const image = document.querySelector(".blur-on-scroll");
@@ -139,4 +147,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener("scroll", checkVisibility);
     checkVisibility();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const introText = document.querySelector(".intro-text");
+
+    function checkScroll() {
+        const rect = introText.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        if (rect.top < windowHeight * 0.75) {
+            introText.classList.add("in-view"); // Lägg till klassen när sektionen är i vy
+        } else {
+            introText.classList.remove("in-view"); // Ta bort klassen om man scrollar upp
+        }
+    }
+
+    window.addEventListener("scroll", checkScroll);
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const elements = document.querySelectorAll(".scroll-animation");
+
+    function checkScroll() {
+        elements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            if (rect.top < windowHeight * 0.75) {
+                element.classList.add("in-view"); // Lägg till klassen när elementet är i vy
+            } else {
+                element.classList.remove("in-view"); // Ta bort klassen om man scrollar upp
+            }
+        });
+    }
+
+    window.addEventListener("scroll", checkScroll);
+    checkScroll(); // Kör direkt vid start
+});
+
+CKEDITOR.on('instanceReady', function(event) {
+    // Sätt bakgrundsfärgen till mörk (samma som övriga fält)
+    event.editor.document.getBody().setStyle('background-color', '#000000');
+
+    // Sätt textfärgen till gul (FFF002)
+    event.editor.document.getBody().setStyle('color', '#FFFFFF');
+
+});
+
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        // Försök dölja popupen för versionen
+        const warningPopup = document.querySelector('.cke_version_warning');
+        if (warningPopup) {
+            warningPopup.style.display = 'none'; // Döljer varningen
+        }
+    }, 500); // Vänta en kort stund innan du döljer popupen
+});
+
+
+CKEDITOR.on('instanceReady', function(event) {
+    var editorDocument = event.editor.document;
+
+    // Sätt glöd-effekten för hela CKEditor-containeren (icke textinnehållet)
+    var editorContainer = event.editor.container;  // Referens till hela CKEditor-behållaren
+    editorContainer.setStyle('box-shadow', '0 0 10px #FFFF00, 0 0 20px #FFFF00, 0 0 40px #8A2BE2, 0 0 100px #8A2BE2');
+    // Ta bort padding och margin från hela CKEditor-området, inklusive border
+    var editorInner = editorContainer.getChild(0);  // Den inre delen av CKEditor, .cke_inner
+    editorInner.setStyle('padding', '0');
+    editorInner.setStyle('margin', '0');
+    editorInner.setStyle('border', '1px solid #FFFF00');  // Ändra till önskad border
 });

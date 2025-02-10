@@ -686,6 +686,14 @@ progress {
   margin-top: var(--bs-gutter-y);
 }
 
+.page-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 100px; /* Avstånd mellan sektionerna */
+}
+
+
 .col {
   flex: 1 0 0%;
 }
@@ -2846,21 +2854,85 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-  --bs-btn-color: #000;
-  --bs-btn-bg: #e6a756;
-  --bs-btn-border-color: #e6a756;
-  --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #eab46f;
-  --bs-btn-hover-border-color: #e9b067;
-  --bs-btn-focus-shadow-rgb: 196, 142, 73;
-  --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #ebb978;
-  --bs-btn-active-border-color: #e9b067;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: #e6a756;
-  --bs-btn-disabled-border-color: #e6a756;
+    background-color: #EC048B !important;  /* Bakgrundsfärg */
+    color: #FFFF00 !important;  /* Textfärg */
+    border-color: #EC048B !important;  /* Kantfärg */
+    border-radius: 0!important;
 }
+
+.btn-primary:hover {
+    background-color: #D5037D !important; /* Bakgrundsfärg på hover */
+    border-color: #D5037D !important;  /* Kantfärg på hover */
+    color: #FFFFFF !important; /* Textfärg vid hover */
+}
+
+
+/* Ändra färg på verktygsfältet */
+.cke_top {
+    background: #000000 !important; /* Mörk toolbar */
+}
+
+/* Ändra färg på knapparna i toolbar */
+.cke_button {
+    filter: invert(100%); /* Gör ikoner ljusa */
+}
+
+/* Ändra färg på rullgardinsmenyer */
+.cke_combo_button {
+    background: #333 !important; /* Mörk dropdown */
+    color: #fff !important;
+}
+
+.cke_editable {
+    background-color: #1e1e1e !important;  /* Mörk bakgrund */
+    color: #ffffff !important;            /* Vit text */
+}
+
+.form-control {
+    background-color: #000000!important;
+    color: #FFFFFF !important;
+    border: 1px solid #ccc !important;
+    border-radius: 0.25rem !important;
+}
+
+textarea.form-control {
+    background-color: #000000!important;
+    color: #FFFFFF !important;
+}
+
+
+
+::placeholder {
+    color: #CCC !important;
+}
+
+select.form-control {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #ccc !important;
+}
+
+.form-control:focus,
+textarea.form-control:focus,
+select.form-control:focus {
+    background-color: #000000 !important;  /* Samma mörka bakgrund som övriga fält */
+    color: #FFFFFF !important;             /* Samma gula textfärg */
+    border-color: #000000 !important;       /* Valfri kantfärg, exempelvis */
+    box-shadow: none !important;            /* Tar bort eventuell skugga vid fokus */
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    /* Tvingar bakgrunden att vara svart */
+    -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
+    /* Tvingar textfärgen till att vara gul (eller valfri färg) */
+    -webkit-text-fill-color: #FFFFFF !important;
+    /* För att undvika att bakgrundsfärgändringen syns */
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+
 
 .btn-secondary {
   --bs-btn-color: #fff;
@@ -4366,6 +4438,7 @@ textarea.form-control-lg {
   --bs-accordion-active-color: #cf964d;
   --bs-accordion-active-bg: #fdf6ee;
 }
+
 
 .accordion-button {
   position: relative;
@@ -10875,17 +10948,24 @@ p {
 }
 
 .section-heading {
-  text-transform: uppercase;
+    text-transform: uppercase;
+    color: white !important;
 }
+
 .section-heading .section-heading-upper {
   display: block;
   font-size: 1rem;
   font-weight: 800;
+  text-shadow: 3px 3px 5px rgba(255, 20, 147, 0.6); /* Rosa skugga underifrån */
 }
 .section-heading .section-heading-lower {
+  font-family: 'Nunito', sans-serif;
   display: block;
-  font-size: 3rem;
-  font-weight: 100;
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-shadow: 3px 3px 5px rgba(255, 20, 147, 0.6); /* Rosa skugga underifrån */
+}
+
 }
 
 .bg-faded {
@@ -10979,9 +11059,37 @@ p {
 }
 
 
+.bg-faded-dark {
+    background-color: rgba(0, 0, 0, 0.9); /* Svart med 70% opacitet */
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+
+
 .glow-effect {
     box-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 45px #ff00ff;
     animation: glowPulse 2s infinite alternate;
+}
+
+/* Standard glow för EmailField */
+.glow-effect input.form-control {
+    box-shadow: 0 0 10px #FFFF00, 0 0 20px #FFFF00 !important; /* Gul glöd */
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Behåll glöden när fältet är i fokus */
+.glow-effect input.form-control:focus {
+    box-shadow: 0 0 15px #FFFF00, 0 0 25px #FFFF00 !important; /* Starkare glow vid fokus */
+    outline: none !important; /* Tar bort blå standardkant */
+}
+
+/* Se till att ingen label eller parent-container glöder */
+.glow-effect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -11050,12 +11158,14 @@ p {
 
 .blur-on-scroll {
     filter: blur(10px);  /* Börjar suddig */
-    transition: filter 1s ease-out;
+    transition: filter 0.7s ease-out;
 }
 
 .blur-on-scroll.scrolled {
     filter: blur(0px);  /* Blir skarp */
 }
+
+
 
 .product-item-img {
     transform: scale(0.7);  /* Startar mindre */
@@ -11068,6 +11178,9 @@ p {
     opacity: 1;  /* Blir synlig */
 }
 
+.intro-contact {
+    padding-bottom: 40px; /* Ökar avståndet mellan intro-sektionen och formuläret */
+}
 
 
 /* --- ANIMERA RUBRIKERNA FRÅN HÖGER/VÄNSTER --- */
@@ -11125,6 +11238,46 @@ p {
     margin-bottom: 200px; /* Justera efter behov */
 }
 
+.glow-effect-input input.form-control,
+.glow-effect-input textarea.form-control {
+    box-shadow: 0 0 10px #FFFF00, 0 0 20px #FFFF00;  /* Justera glöd-effekten */
+}
+
+/* Applicera glöd på själva iframe som omger CKEditor */
+.cke_editable {
+    box-shadow: 0 0 10px #FFFF00, 0 0 20px #FFFF00; /* Glöd-effekten */
+}
+
+
+/* Ta bort eventuell extra padding och border från själva redigeringsområdet */
+.cke_editable {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid #FFFF00 !important; /* Justera till önskad border */
+    box-shadow: 0 0 10px #FFFF00, 0 0 20px #FFFF00 !important; /* Glöd-effekten */
+}
+
+/* Ta bort eventuell extra padding eller border från iframe om så behövs */
+.cke_editor {
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* Kontrollera att inga extra kanter tillkommer från föräldrar */
+.cke_inner {
+    border: none !important;
+    padding: 0 !important;
+    background: none !important;
+}
+
+/* Om du har specifika p-taggar som behöver justeras, gör så här: */
+.cke_editable p {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+
 
 .cta {
   padding-top: 5rem;
@@ -11172,6 +11325,19 @@ p {
     background-size: cover;
     background-blend-mode: overlay;
 }
+
+
+.scroll-animation {
+    transform: translateX(100%) scale(0.5) translateY(-350%) scale(0.5); /* Startläge: utanför skärmen till höger + liten */
+    opacity: 0; /* Startar osynlig */
+    transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+.scroll-animation.in-view {
+    transform: translateX(0) scale(1); /* Full storlek & position */
+    opacity: 1; /* Synlig */
+}
+
 
 
 
@@ -11236,6 +11402,16 @@ p {
     width: 50%;
   }
 }
+
+.intro-text {
+    transform: scale(0.8); /* Startstorlek (mindre) */
+    transition: transform 0.5s ease-out; /* Mjuk övergång */
+}
+
+.intro-text.in-view {
+    transform: scale(1); /* Full storlek när man scrollar ner */
+}
+
 
 .custom-gradient-bg {
   background: linear-gradient(45deg, #D81D8C -20%, #F8EC04 20%, #D81D8C 130%); /* Gradient från lila till blå */

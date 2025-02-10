@@ -10,8 +10,15 @@
           rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&display=swap" rel="stylesheet">
 
-    <link href="static/css/styles.css" rel="stylesheet"/>
+
+
+
+
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+
 
     {% endblock %}
 
@@ -28,10 +35,10 @@
         <div class="header-bar"></div>
         <div class="row">
     <div class="col-12 image-container d-flex justify-content-center mt-0">
-        <a href="{{ url_for('about') }}">
+        <a href="{{ url_for('home') }}">
             <div class="particle-container">
                 <img src="static/img/me_too_too (2).png" alt="My Image"
-                     class="img-fluid glow-effect" width="800">
+                     class="img-fluid" width="800">
                 <div class="particles"></div>
             </div>
         </a>

@@ -1,64 +1,67 @@
 {% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
 
 {% block title %}Secrets{% endblock %}
 
 {% block content %}
-    <body>
-        <section class="page-section cta">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-9 mx-auto">
-                        <div class="cta-inner bg-faded text-center rounded">
-                            <h2 class="section-heading mb-5">
-                                <span class="section-heading-upper">Come On In</span>
-                                <span class="section-heading-lower">We're Open</span>
+<body>
+<section class="page-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+               <div class="text-center rounded">
+                   <div class="product-item-title right d-flex">
+                        <div class="bg-faded p-5 d-flex ms-auto rounded glow-effect custom-gradient-bg">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-lower">{{ text }}</span>
                             </h2>
-                            <ul class="list-unstyled list-hours mb-5 text-left mx-auto">
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Sunday
-                                    <span class="ms-auto">Closed</span>
-                                </li>
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Monday
-                                    <span class="ms-auto">7:00 AM to 8:00 PM</span>
-                                </li>
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Tuesday
-                                    <span class="ms-auto">7:00 AM to 8:00 PM</span>
-                                </li>
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Wednesday
-                                    <span class="ms-auto">7:00 AM to 8:00 PM</span>
-                                </li>
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Thursday
-                                    <span class="ms-auto">7:00 AM to 8:00 PM</span>
-                                </li>
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Friday
-                                    <span class="ms-auto">7:00 AM to 8:00 PM</span>
-                                </li>
-                                <li class="list-unstyled-item list-hours-item d-flex">
-                                    Saturday
-                                    <span class="ms-auto">9:00 AM to 5:00 PM</span>
-                                </li>
-                            </ul>
-                            <p class="address mb-5">
-                                <em>
-                                    <strong>1116 Orchard Street</strong>
-                                    <br />
-                                    Golden Valley, Minnesota
-                                </em>
-                            </p>
-                            <p class="mb-0">
-                                <small><em>Call Anytime</em></small>
-                                <br />
-                                (317) 585-8468
-                            </p>
                         </div>
                     </div>
+                    {{ form.csrf_token }}
+                    {% if form.csrf_token.errors %}
+                    <div class="warning">You have submitted an invalid CSRF token</div>
+                    {% endif %}
+                    <form method="POST">
+                        {{ form.hidden_tag() }}  <!-- CSRF-skydd -->
+
+                        <div class="glow-effect-input glow-effect product-item-title right" style="margin-top: 100px;">
+                            {{ form.phone(class="form-control") }}
+                            <!-- StringField utan etikett -->
+                        </div>
+
+                        <div class="glow-effect-input glow-effect product-item-title left" style="margin-top: 40px">
+                            {{ form.email.label }}  <!-- Visar etiketten -->
+                            {{ form.email(class="form-control") }}
+                        </div>
+
+                        <div class="intro-text" style="margin-top: 30px">
+                            {{ form.body.label }}  <!-- Etikett för CKEditor -->
+                            {{ form.body(class="form-control") }}  <!-- CKEditor-fältet -->
+                            {{ ckeditor.load(pkg_type="basic") }}  <!-- Laddar CKEditor -->
+                            {{ ckeditor.config(name=form.body.id) }}  <!-- Använder formulärets fält-ID -->
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+                    <p class="address mb-5">
+                        <em>
+                            <strong>1116 Orchard Street</strong>
+                            <br/>
+                            Golden Valley, Minnesota
+                        </em>
+                    </p>
+                    <p class="mb-0">
+                        <small><em>Call Anytime</em></small>
+                        <br/>
+                        (317) 585-8468
+                    </p>
                 </div>
             </div>
-        </section>
-    </body>
+        </div>
+    </div>
+</section>
+
+
+</body>
 {% endblock %}
