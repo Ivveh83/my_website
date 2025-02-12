@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}Secrets{% endblock %}
+
+{% block content %}
+<body>
+<section class="page-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <div class="text-center rounded">
+                    <div class="product-item-title right">
+                        <div class="bg-faded p-5 d-flex ms-auto rounded glow-effect custom-gradient-bg">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-lower">{{ text }}</span>
+                                <span class="section-heading-upper">{{ text_two }}</span>
+                            </h2>
+                        </div>
+                    </div>
+
+                    {{ form.csrf_token }}
+                    {% if form.csrf_token.errors %}
+                    <div class="warning">You have submitted an invalid CSRF token</div>
+                    {% endif %}
+                    <form method="POST">
+                        {{ form.hidden_tag() }}  <!-- CSRF-skydd -->
+
+                        <div class="glow-effect-input glow-effect product-item-title right my-list li ul" style="margin-top: 100px;">
+                            {{ form.choice.label }}
+                            {{ form.choice(class="form-control") }}
+                            <!-- StringField utan etikett -->
+                        </div>
+
+                        <div class="glow-effect-input glow-effect product-item-title left" style="margin-top: 40px">
+                            {{ form.text.label }}  <!-- Visar etiketten -->
+                            {{ form.text(class="form-control") }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+{% endblock %}

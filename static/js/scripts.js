@@ -221,3 +221,7 @@ CKEDITOR.on('instanceReady', function(event) {
     editorInner.setStyle('margin', '0');
     editorInner.setStyle('border', '1px solid #FFFF00');  // Ändra till önskad border
 });
+
+
+
+

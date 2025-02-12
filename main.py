@@ -4,7 +4,7 @@ import smtplib
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Length, length
 from flask_ckeditor import CKEditor, CKEditorField
-from wtforms import EmailField, SubmitField, StringField
+from wtforms import EmailField, SubmitField, StringField, RadioField
 import os
 
 sending_email = os.environ.get("SENDING_EMAIL")
@@ -27,8 +27,9 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit Mail')
 
 class MorseForm(FlaskForm):
-    text = StringField(label="", render_kw={"placeholder": "Type your message here..."})
-    submit = SubmitField('Submit Text')
+    choice = RadioField('Play or Analyze Morse:', choices=[('play', 'Play'), ('analyze', 'Analyze')], validators=[DataRequired()])
+    text = StringField(label="", render_kw={"placeholder": "What do you want to send in Morse Code?"})
+    submit = SubmitField('Submit')
 
 @app.route('/')
 def home():
@@ -71,25 +72,23 @@ def contact():
 
 @app.route('/morse_decoder', methods=['GET', 'POST'])
 def morse_decoder():
-    if request.method == 'GET':
-        with app.app_context():
-            form = MorseForm(
-                text=request.form.get('text')
-            )
-            return render_template('morse_decoder.html', form=form)
+
+    form = MorseForm()
+    if form.validate_on_submit():
+        choice = form.choice.data
+        text = form.text.data
+        print(choice)
+        print(text)
+        return render_template('morse_decoder.html',
+                               form=form,
+                               text="Morse decoder",
+                               text_two="This is a two-way Morse Decoder")
 
 
-    elif request.method == "POST":
-
-        text = request.form.get("text")
-
-
-
-        with app.app_context():
-            form = MorseForm(
-                text=request.form.get('text')
-            )
-        return render_template('contact.html', form=form, text="Message successfully delivered, I'll get back to you ASAP!")
+    return render_template('morse_decoder.html',
+                           form=form,
+                           text="Morse Decoder",
+                           text_two="This is a two-way Morse Decoder")
 
 
 

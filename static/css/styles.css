@@ -11182,6 +11182,11 @@ p {
     padding-bottom: 40px; /* Ökar avståndet mellan intro-sektionen och formuläret */
 }
 
+li {
+  list-style: none;
+}
+
+
 
 /* --- ANIMERA RUBRIKERNA FRÅN HÖGER/VÄNSTER --- */
 .product-item-title {
@@ -11232,6 +11237,14 @@ p {
     transform: scale(1);
     opacity: 1;
 }
+
+  .product-item-title.right {
+      transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  }
+  .hide {
+      transform: translateX(100%); /* Skjuter ut elementet åt höger */
+      opacity: 0; /* Gör det osynligt */
+  }
 
 
 .page-section {
