@@ -13,31 +13,37 @@
                     <div class="product-item-title right">
                         <div class="bg-faded p-5 d-flex ms-auto rounded glow-effect custom-gradient-bg">
                             <h2 class="section-heading mb-0">
-                                <span class="section-heading-lower">{{ text }}</span>
-                                <span class="section-heading-upper">{{ text_two }}</span>
+                                <span id="text" class="section-heading-lower">{{ text|safe }}</span>
+                                <span id="text_two" class="section-heading-upper">{{ text_two }}</span>
                             </h2>
                         </div>
                     </div>
-
+                    <!-- CSRF-skydd -->
                     {{ form.csrf_token }}
                     {% if form.csrf_token.errors %}
                     <div class="warning">You have submitted an invalid CSRF token</div>
                     {% endif %}
-                    <form method="POST">
-                        {{ form.hidden_tag() }}  <!-- CSRF-skydd -->
+                    <form id="morseForm" method="POST">
+                        {{ form.hidden_tag() }}
 
-                        <div class="glow-effect-input glow-effect product-item-title right my-list li ul" style="margin-top: 100px;">
+                        <!-- Radio buttons for Analyze/Play -->
+                        <div class="glow-effect-input glow-effect product-item-title right my-list" style="margin-top: 100px;">
                             {{ form.choice.label }}
                             {{ form.choice(class="form-control") }}
-                            <!-- StringField utan etikett -->
                         </div>
 
-                        <div class="glow-effect-input glow-effect product-item-title left" style="margin-top: 40px">
-                            {{ form.text.label }}  <!-- Visar etiketten -->
+                        <!-- Dropdown for recording time, hidden by default -->
+                        <div id="recording-time-container" class="glow-effect-input glow-effect product-item-title left" style="margin-top: 40px;">
+                            {{ form.recording_time.label }}
+                            {{ form.recording_time(class="form-control") }}
+                        </div>
+
+                        <div class="glow-effect-input glow-effect product-item-title right" style="margin-top: 40px">
+                            {{ form.text.label }}
                             {{ form.text(class="form-control") }}
                         </div>
 
-                        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
+                        <button id="submit-btn" type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
                     </form>
                 </div>
             </div>
@@ -45,6 +51,8 @@
     </div>
 </section>
 
+<!-- Link to your external JS file -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 {% endblock %}

@@ -3,11 +3,7 @@
 * Copyright 2013-2023 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-business-casual/blob/master/LICENSE)
 */
-// Highlights current date on contact page
-window.addEventListener('DOMContentLoaded', event => {
-    const listHoursArray = document.body.querySelectorAll('.list-hours li');
-    listHoursArray[new Date().getDay()].classList.add(('today'));
-});
+
 
 // Funktion som genererar partiklar från bildens kanter
 function generateParticles() {
@@ -71,24 +67,48 @@ document.querySelector('.particle-container').addEventListener('mouseenter', gen
 // Aktivera partiklar automatiskt vid sidladdning (3 gånger)
 document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < 3; i++) { // Kör 3 gånger vid sidladdning
-        setTimeout(generateParticles, i * 600); // Skjuter iväg partiklar varje 1.5 sekund
+        setTimeout(generateParticles, i * 600); // Skjuter iväg partiklar varje 0.6 sekund
     }
 });
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const image = document.querySelector(".blur-on-scroll");
+//document.addEventListener("DOMContentLoaded", function () {
+//    const image = document.querySelector(".blur-on-scroll");
+//
+//    window.addEventListener("scroll", function () {
+//        const scrollPosition = window.scrollY;
+//        if (scrollPosition > 250) {  // Justera detta värde beroende på när du vill att effekten ska slå in
+//            image.classList.add("scrolled");
+//        } else {
+//            image.classList.remove("scrolled");
+//        }
+//    });
+//});
 
-    window.addEventListener("scroll", function () {
-        const scrollPosition = window.scrollY;
-        if (scrollPosition > 250) {  // Justera detta värde beroende på när du vill att effekten ska slå in
-            image.classList.add("scrolled");
-        } else {
-            image.classList.remove("scrolled");
-        }
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    const image = document.querySelector('.blur-on-scroll');
+    let isInView = false;  // Håller koll på om bilden är i "in-view"-läge
+
+    let observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            // Om inte redan i-view och minst 50% synligt, lägg till klassen
+            if (!isInView && entry.intersectionRatio >= 0.5) {
+                image.classList.add("scrolled");
+                isInView = true;
+            }
+            // Om redan in-view men synligheten sjunker under 0.3, ta bort klassen
+            else if (isInView && entry.intersectionRatio < 0.7) {
+                image.classList.remove("scrolled");
+                isInView = false;
+            }
+        });
+    }, { threshold: [0.7, 0.5] });  // Använder en array med tröskelvärden
+
+    observer.observe(image);
 });
+
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -221,7 +241,3 @@ CKEDITOR.on('instanceReady', function(event) {
     editorInner.setStyle('margin', '0');
     editorInner.setStyle('border', '1px solid #FFFF00');  // Ändra till önskad border
 });
-
-
-
-

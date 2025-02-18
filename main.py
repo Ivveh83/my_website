@@ -2,10 +2,12 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 import smtplib
 from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired, Length, length
+from wtforms.validators import DataRequired, Length
 from flask_ckeditor import CKEditor, CKEditorField
-from wtforms import EmailField, SubmitField, StringField, RadioField
+from wtforms import EmailField, SubmitField, StringField, RadioField, SelectField
 import os
+from morse_decoder.main import Run
+import threading
 
 sending_email = os.environ.get("SENDING_EMAIL")
 password = os.environ.get("SENDING_EMAIL_PASSWORD")
@@ -27,8 +29,11 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit Mail')
 
 class MorseForm(FlaskForm):
-    choice = RadioField('Play or Analyze Morse:', choices=[('play', 'Play'), ('analyze', 'Analyze')], validators=[DataRequired()])
-    text = StringField(label="", render_kw={"placeholder": "What do you want to send in Morse Code?"})
+    choice = RadioField('', choices=[('play', 'Play'), ('analyze', 'Analyze')], validators=[DataRequired()])
+    text = StringField(label="", render_kw={"placeholder": "Write your text here..."})
+    recording_time = SelectField('',
+                                 choices=[('5', '5 seconds'), ('10', '10 seconds'), ('15', '15 seconds'),
+                                          ('20', '20 seconds'), ('25', '25 seconds'), ('30', '30 seconds')])
     submit = SubmitField('Submit')
 
 @app.route('/')
@@ -72,24 +77,40 @@ def contact():
 
 @app.route('/morse_decoder', methods=['GET', 'POST'])
 def morse_decoder():
-
     form = MorseForm()
+
     if form.validate_on_submit():
+        # Hämta värdet från recording_time
+        recording_time = int(form.recording_time.data) if form.choice.data == "analyze" else None
         choice = form.choice.data
         text = form.text.data
-        print(choice)
-        print(text)
-        return render_template('morse_decoder.html',
-                               form=form,
-                               text="Morse decoder",
-                               text_two="This is a two-way Morse Decoder")
 
+        # Skapa instans av Run
+        run = Run(choice, text)
+        morse_code = run.text_to_morse
+
+        if run.choice == "play":
+            threading.Thread(target=run.play).start()
+            return render_template('morse_decoder.html',
+                                   form=form,
+                                   text=f'Text: {text}<br>Morse Code: {morse_code}',
+                                   text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
+                                            "to record 👇")
+        elif run.choice == "analyze":
+            print(type(recording_time))  # Här kommer inspelningstiden att loggas om den valts
+            morse_to_text = run.analyze(recording_time)
+            print(morse_to_text)
+            return render_template('morse_decoder.html',
+                                   form=form,
+                                   text=f'Decoded Message:<br>{morse_to_text}',
+                                   text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
+                                            "to record 👇")
 
     return render_template('morse_decoder.html',
                            form=form,
-                           text="Morse Decoder",
-                           text_two="This is a two-way Morse Decoder")
-
+                           text="Morse En- & Decoder",
+                           text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
+                                    "to record 👇")
 
 
 if __name__ == '__main__':

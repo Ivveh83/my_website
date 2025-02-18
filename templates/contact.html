@@ -9,14 +9,16 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-9 mx-auto">
-               <div class="text-center rounded">
-                   <div class="product-item-title right d-flex">
+                <div class="text-center rounded">
+                    <div class="product-item-title right">
                         <div class="bg-faded p-5 d-flex ms-auto rounded glow-effect custom-gradient-bg">
                             <h2 class="section-heading mb-0">
                                 <span class="section-heading-lower">{{ text }}</span>
+                                <span class="section-heading-upper">Send me a message and you'll get a respond ASAP.</span>
                             </h2>
                         </div>
                     </div>
+
                     {{ form.csrf_token }}
                     {% if form.csrf_token.errors %}
                     <div class="warning">You have submitted an invalid CSRF token</div>
@@ -41,7 +43,7 @@
                             {{ ckeditor.config(name=form.body.id) }}  <!-- Använder formulärets fält-ID -->
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
                     </form>
 
                     <p class="address mb-5">

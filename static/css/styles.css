@@ -187,6 +187,7 @@ address {
 ol,
 ul {
   padding-left: 2rem;
+  margin-bottom: 0 !important;
 }
 
 ol,
@@ -11251,10 +11252,48 @@ li {
     margin-bottom: 200px; /* Justera efter behov */
 }
 
-.glow-effect-input input.form-control,
-.glow-effect-input textarea.form-control {
-    box-shadow: 0 0 10px #FFFF00, 0 0 20px #FFFF00;  /* Justera glöd-effekten */
+.glow-effect-form {
+    padding: 20px; /* Lite utrymme inuti formuläret */
+    border: 2px solid #FFFF00; /* Synlig ram */
+    box-shadow: 0 0 15px #FFFF00, 0 0 30px #FFFF00; /* Glöd runt formuläret */
+    border-radius: 10px; /* Rundade hörn */
 }
+
+/* Extra glöd när formuläret är i fokus (om det får fokus) */
+.glow-effect-form:focus-within {
+    box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
+    border-color: #FFD700;
+}
+
+.glow-effect-input input[type="radio"] {
+    box-shadow: 0 0 10px #FFFF00, 0 0 20px #FFFF00; /* Glöd för radioknappar */
+}
+
+/* Om radioknapparna får fokus */
+.glow-effect-input input[type="radio"]:focus {
+    box-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700; /* Glöd vid fokus */
+}
+
+
+
+input[type="radio"] {
+  appearance: none; /* Tar bort standardutseendet */
+  width: 16px; /* Anpassa storleken */
+  height: 16px;
+  border: 2px solid #FF00FF; /* Färgen på ramen */
+  border-radius: 50%; /* Gör den rund */
+  box-shadow: 0 0 5px #FF00FF; /* Glow-effekt runt knappen */
+  background-color: white; /* Bakgrundsfärg */
+  outline: none; /* Tar bort standardfokus */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+input[type="radio"]:checked {
+  background-color: #FF00FF; /* Färg när vald */
+  box-shadow: 0 0 10px #FF00FF; /* Starkare glow vid val */
+}
+
+
 
 /* Applicera glöd på själva iframe som omger CKEditor */
 .cke_editable {
@@ -11427,8 +11466,13 @@ li {
 
 
 .custom-gradient-bg {
-  background: linear-gradient(45deg, #D81D8C -20%, #F8EC04 20%, #D81D8C 130%); /* Gradient från lila till blå */
+  background: linear-gradient(45deg,
+    rgba(216, 29, 140, 0.8) -20%,
+    rgba(248, 236, 4, 0.8) 20%,
+    rgba(216, 29, 140, 0.8) 180%
+  );
 }
+
 
 .header-bar {
     background: linear-gradient(to bottom, rgba(47, 23, 15, 0.9) 80%, rgba(47, 23, 15, 0));
