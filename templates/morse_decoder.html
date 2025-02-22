@@ -25,15 +25,16 @@
                     {% endif %}
                     <form id="morseForm" method="POST">
                         {{ form.hidden_tag() }}
-
                         <!-- Radio buttons for Analyze/Play -->
-                        <div class="glow-effect-input glow-effect product-item-title right my-list" style="margin-top: 100px;">
+                        <div class="glow-effect-input glow-effect product-item-title right my-list"
+                             style="margin-top: 100px;">
                             {{ form.choice.label }}
                             {{ form.choice(class="form-control") }}
                         </div>
 
                         <!-- Dropdown for recording time, hidden by default -->
-                        <div id="recording-time-container" class="glow-effect-input glow-effect product-item-title left" style="margin-top: 40px;">
+                        <div id="recording-time-container" class="glow-effect-input glow-effect product-item-title left"
+                             style="margin-top: 40px;">
                             {{ form.recording_time.label }}
                             {{ form.recording_time(class="form-control") }}
                         </div>
@@ -43,16 +44,17 @@
                             {{ form.text(class="form-control") }}
                         </div>
 
-                        <button id="submit-btn" type="submit" class="btn btn-primary" style="margin-top: 10px">Submit</button>
+                        <button id="submit-btn" type="submit" class="btn btn-primary" style="margin-top: 10px">Submit
+                        </button>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Link to your external JS file -->
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
 
 </body>
 {% endblock %}

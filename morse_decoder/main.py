@@ -20,24 +20,16 @@ class Run:
         play_text = Play()
         play_text.play(self.text)
 
-    def analyze(self, record_time):
+    def analyze(self):
+        analyze = Analyze()
+        binary_morse_spectrogram = analyze.read_spectrogram()
+        morse_sequence = analyze.analyze_spectrogram(binary_morse_spectrogram)
+        code = analyze.read_morse_sequence(morse_sequence)
+        grouped_morse_code = analyze.create_morse(code)
+        morse_to_text = analyze.decode_morse(grouped_morse_code)
 
-            # record_time = int(input('How many seconds do you wish to record? Write in numbers:\n'))
-            recorded_sound = Record()
-            print('Starting to record in 3...')
-            time.sleep(3)
-            recorded_sound.record(record_time)
-            recorded_sound.create_spectrogram()
-            time.sleep(2)
+        return morse_to_text.capitalize()
 
-            analyze = Analyze()
-            binary_morse_spectrogram = analyze.read_spectrogram()
-            morse_sequence = analyze.analyze_spectrogram(binary_morse_spectrogram)
-            code = analyze.read_morse_sequence(morse_sequence)
-            grouped_morse_code = analyze.create_morse(code)
-            morse_to_text = analyze.decode_morse(grouped_morse_code)
-
-            return morse_to_text.capitalize()
 
 
 

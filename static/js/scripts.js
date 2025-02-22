@@ -3,6 +3,113 @@
 * Copyright 2013-2023 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-business-casual/blob/master/LICENSE)
 */
+//console.log("JavaScript file is loaded.");
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("morseForm");
+    const recordingTimeInput = document.getElementById("recording_time"); // Hämta dropdown
+    const choiceInput = document.querySelector('input[name="choice"]:checked');
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    console.log("JavaScript file is loaded."); // Kontrollera att scriptet är laddat
+
+    // Lyssna på submit-eventet
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Stoppa formuläret från att skicka direkt
+
+        // Lägg till logg här för att bekräfta att submit-eventet fångas upp
+        console.log("Form submit intercepted.");
+
+        // Kontrollera vilket val användaren har gjort
+        const choiceInput = document.querySelector('input[name="choice"]:checked');
+        console.log("Form submitted, selected choice: ", choiceInput ? choiceInput.value : "None");
+
+        if (choiceInput && choiceInput.value === "analyze") {
+            console.log("Analyze chosen, starting recording...");
+            startRecording(); // Starta inspelning om "analyze" är valt
+        } else {
+            console.log("Play chosen, submitting form...");
+            setTimeout(() => {
+                form.submit(); // Skicka formuläret manuellt efter en kort fördröjning
+            }, 100); // Fördröj formulärskickningen så att preventDefault får effekt
+        }
+    });
+
+    function startRecording() {
+        const recordingTime = recordingTimeInput ? parseInt(recordingTimeInput.value) * 1000 : 5000;
+        console.log("Recording for ", recordingTime / 1000, " seconds");
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                recordedChunks = [];
+
+                mediaRecorder.ondataavailable = event => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = sendAudioFile;
+
+                mediaRecorder.start();
+
+                // Stoppa inspelning efter valt antal sekunder
+                setTimeout(() => {
+                    console.log("Stopping recording...");
+                    mediaRecorder.stop();
+                }, recordingTime);
+            })
+            .catch(error => {
+                console.error("Error accessing microphone:", error);
+            });
+    }
+
+    function sendAudioFile() {
+        const audioBlob = new Blob(recordedChunks, { type: "audio/wav" });
+        const formData = new FormData();
+        formData.append("audio", audioBlob, "audio_recording.wav");
+
+        console.log("Sending audio file...");
+
+        fetch("/morse_decoder", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text()) // Flask returnerar HTML
+        .then(html => {
+            document.body.innerHTML = html; // Ladda om sidan med svaret
+        })
+        .catch(error => console.error("Error uploading audio:", error));
+    }
+});
+
+
+function sendAudioFile() {
+    const audioBlob = new Blob(recordedChunks, { type: "audio/wav" });
+    const formData = new FormData();
+    formData.append("audio", audioBlob, "audio_recording.wav");
+
+    // Hämta CSRF-token från formuläret
+    const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+    formData.append("csrf_token", csrfToken); // Lägg till CSRF-token i FormData
+
+    console.log("Sending audio file with CSRF token...");
+
+    fetch("/morse_decoder", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text()) // Flask returnerar HTML
+    .then(html => {
+        document.body.innerHTML = html; // Ladda om sidan med svaret
+    })
+    .catch(error => console.error("Error uploading audio:", error));
+}
+
+
 
 
 // Funktion som genererar partiklar från bildens kanter
@@ -241,3 +348,11 @@ CKEDITOR.on('instanceReady', function(event) {
     editorInner.setStyle('margin', '0');
     editorInner.setStyle('border', '1px solid #FFFF00');  // Ändra till önskad border
 });
+
+
+
+
+
+
+
+

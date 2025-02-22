@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 import smtplib
@@ -80,8 +82,6 @@ def morse_decoder():
     form = MorseForm()
 
     if form.validate_on_submit():
-        # Hämta värdet från recording_time
-        recording_time = int(form.recording_time.data) if form.choice.data == "analyze" else None
         choice = form.choice.data
         text = form.text.data
 
@@ -97,8 +97,8 @@ def morse_decoder():
                                    text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
                                             "to record 👇")
         elif run.choice == "analyze":
-            print(type(recording_time))  # Här kommer inspelningstiden att loggas om den valts
-            morse_to_text = run.analyze(recording_time)
+            # Analysera den befintliga ljudfilen direkt utan att spela in
+            morse_to_text = run.analyze()
             print(morse_to_text)
             return render_template('morse_decoder.html',
                                    form=form,

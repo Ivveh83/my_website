@@ -54,10 +54,6 @@ class Record:
         plt.yticks([])  # Ta bort ticks på y-axeln
         plt.xlabel('')  # Ta bort x-axelns etikett
         plt.ylabel('')  # Ta bort y-axelns etikett
-        # plt.title("Spektrogram")
-        # plt.colorbar(format='%+2.0f dB')
-        # plt.xlabel("Tid [s]")
-        # plt.ylabel("Frekvens [Hz]")
 
 
         # Kontrollera om mappen 'recorded_file_spectrogram' finns, annars skapa den
