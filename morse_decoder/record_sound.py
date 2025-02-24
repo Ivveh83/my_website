@@ -12,7 +12,7 @@ import os
 class Record:
     def __init__(self):
         # Filnamn för WAV-filen
-        self.filename = 'morse_decoder/audio/audio_recording.wav'
+        self.audio_filename = 'morse_decoder/audio/audio_recording.wav'
         self.spectrogram_filename = 'morse_decoder/spectrogram/spectrogram.png'
         # Samplingsfrekvens
         self.samplerate = 44100
@@ -30,16 +30,16 @@ class Record:
         sd.wait()
 
         # Spara ljudet som WAV-fil
-        wav.write(self.filename, self.samplerate, (audio * 32767).astype(np.int16))  # Omvandla till 16-bitars data
+        wav.write(self.audio_filename, self.samplerate, (audio * 32767).astype(np.int16))  # Omvandla till 16-bitars data
 
-        print(f"Sound recorded and saved as {self.filename}")
+        print(f"Sound recorded and saved as {self.audio_filename}")
     def create_spectrogram(self):
         """Create and save a spectrogram"""
         # Läs in WAV-filen och skapa spektrogram med librosa
         print("Creating spectrogram...")
 
         # Ladda ljudfilen med librosa (detta returnerar en float32 array)
-        y, sr = librosa.load(self.filename, sr=self.samplerate)
+        y, sr = librosa.load(self.audio_filename, sr=self.samplerate)
 
         # Skapa ett spektrogram (log-mel-spektrogram)
         S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128)

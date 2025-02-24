@@ -72,7 +72,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const formData = new FormData();
         formData.append("audio", audioBlob, "audio_recording.wav");
 
-        console.log("Sending audio file...");
+        // Hämta och skicka CSRF-token
+        const csrfToken = document.querySelector("input[name='csrf_token']").value;
+        formData.append("csrf_token", csrfToken);
+
+        // Hämta och skicka valda alternativ från formuläret
+        const choice = document.querySelector('input[name="choice"]:checked');
+        if (choice) {
+            formData.append("choice", choice.value);
+        } else {
+            console.error("Choice is missing!");
+        }
+
+        const recordingTime = document.getElementById("recording_time");
+        if (recordingTime) {
+            formData.append("recording_time", recordingTime.value);
+        } else {
+            console.error("Recording time is missing!");
+        }
+
+        console.log("Sending audio file with form data...");
 
         fetch("/morse_decoder", {
             method: "POST",
@@ -86,28 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
-function sendAudioFile() {
-    const audioBlob = new Blob(recordedChunks, { type: "audio/wav" });
-    const formData = new FormData();
-    formData.append("audio", audioBlob, "audio_recording.wav");
-
-    // Hämta CSRF-token från formuläret
-    const csrfToken = document.querySelector('input[name="csrf_token"]').value;
-    formData.append("csrf_token", csrfToken); // Lägg till CSRF-token i FormData
-
-    console.log("Sending audio file with CSRF token...");
-
-    fetch("/morse_decoder", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.text()) // Flask returnerar HTML
-    .then(html => {
-        document.body.innerHTML = html; // Ladda om sidan med svaret
-    })
-    .catch(error => console.error("Error uploading audio:", error));
-}
 
 
 

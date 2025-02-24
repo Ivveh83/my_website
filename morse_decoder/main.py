@@ -7,7 +7,7 @@ import time
 class Run:
     def __init__(self, choice, text, record_time = 10):
         self.choice = choice
-        self.text = text
+        self.text = text if text else ""  # 🔹 Se till att text aldrig är None
         self.writing_text = Write()
         self.text_to_morse = self.writing_text.write(self.text)
         # print(f"Morse Code: {text_to_morse}")
@@ -21,6 +21,8 @@ class Run:
         play_text.play(self.text)
 
     def analyze(self):
+        record = Record()
+        record.create_spectrogram()
         analyze = Analyze()
         binary_morse_spectrogram = analyze.read_spectrogram()
         morse_sequence = analyze.analyze_spectrogram(binary_morse_spectrogram)

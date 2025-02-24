@@ -77,41 +77,58 @@ def contact():
 
 
 
+UPLOAD_FOLDER = "morse_decoder/audio"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Skapa mappen om den inte finns
+
 @app.route('/morse_decoder', methods=['GET', 'POST'])
 def morse_decoder():
     form = MorseForm()
 
-    if form.validate_on_submit():
-        choice = form.choice.data
-        text = form.text.data
+    if request.method == "POST":
+        print("Form submitted via POST")  # Debugging
 
-        # Skapa instans av Run
-        run = Run(choice, text)
-        morse_code = run.text_to_morse
+        if form.validate_on_submit():
+            print("Form validate on submit")
+            choice = form.choice.data
+            text = form.text.data
 
-        if run.choice == "play":
-            threading.Thread(target=run.play).start()
-            return render_template('morse_decoder.html',
-                                   form=form,
-                                   text=f'Text: {text}<br>Morse Code: {morse_code}',
-                                   text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
-                                            "to record 👇")
-        elif run.choice == "analyze":
-            # Analysera den befintliga ljudfilen direkt utan att spela in
-            morse_to_text = run.analyze()
-            print(morse_to_text)
-            return render_template('morse_decoder.html',
-                                   form=form,
-                                   text=f'Decoded Message:<br>{morse_to_text}',
-                                   text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
-                                            "to record 👇")
+            # Skapa instans av Run
+            run = Run(choice, text if text else None)  # Undvik tom text för analyze
 
+            if run.choice == "play":
+                morse_code = run.text_to_morse
+                threading.Thread(target=run.play).start()
+                return render_template('morse_decoder.html',
+                                       form=form,
+                                       text=f'Text: {text}<br>Morse Code: {morse_code}',
+                                       text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
+                                                "to record 👇")
+            elif run.choice == "analyze":
+                # Kolla om en ljudfil har skickats
+                if 'audio' in request.files:
+                    audio_file = request.files['audio']
+                    if audio_file.filename:  # Kontrollera att en faktisk fil skickades
+                        file_path = os.path.join(UPLOAD_FOLDER, "audio_recording.wav")
+                        audio_file.save(file_path)
+                        print(f"File saved at: {file_path}")
+                morse_to_text = run.analyze()  # Analysera ljudfilen
+                print(f"Decoded Morse: {morse_to_text}")
+
+                return render_template('morse_decoder.html',
+                                       form=form,
+                                       text=f'Decoded Message:<br>{morse_to_text}',
+                                       text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
+                                                "to record 👇")
+        else:
+            print("Form validation failed!")
+            print(form.errors)  # Skriv ut vad som är fel
+
+    # GET-request (första laddningen av sidan)
     return render_template('morse_decoder.html',
                            form=form,
                            text="Morse En- & Decoder",
                            text_two="To Play write your text in the field 👇 To Analyze choose how many seconds "
                                     "to record 👇")
-
 
 if __name__ == '__main__':
     app.run(debug=True)
