@@ -71,6 +71,7 @@ class Analyze:
     def analyze_spectrogram(self, binary_img):
         """Takes an array as input and returns a list with the length of number of beeps and pauses
         from the recording"""
+        print("Starting to analyze spectrogram")
         height, width = binary_img.shape
         # print(f'width: {width}')
 
@@ -103,6 +104,7 @@ class Analyze:
     def read_morse_sequence(self, morse_sequence):
         """Takes a list with tuples of beeps and pauses and their length as input
         and returns a list with beeps and pauses translated to morse signs"""
+        print("Starting to read morse sequence")
         pip_lengths = [length for state, length in morse_sequence if length >= 3 and state == 'pip']
         if pip_lengths:
             unit = min(pip_lengths)
@@ -130,6 +132,7 @@ class Analyze:
     def create_morse(self, decoded_morse):
         """Takes a list with morse code as input and returns a dictionary with structured morse code"""
         # Loopa genom listan
+        print("Creating morse code")
         for symbol in decoded_morse:
             if symbol == '//':  # Nytt ord
                 if self.current_group:
@@ -155,6 +158,7 @@ class Analyze:
 
     def decode_morse(self, decoded_morse_signs_dict):
         """Takes a dictionary as input and returns a string"""
+        print("Decoding morse code")
         string = ""
         for key in decoded_morse_signs_dict:
             if decoded_morse_signs_dict[key] in self.morse_dict:

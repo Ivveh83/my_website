@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function sendAudioFile() {
+        
         const audioBlob = new Blob(recordedChunks, { type: "audio/wav" });
         const formData = new FormData();
         formData.append("audio", audioBlob, "audio_recording.wav");
@@ -278,6 +279,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const introText = document.querySelector(".intro-text");
 
     function checkScroll() {
+
+        const img = document.querySelector('.blur-on-scroll');
+        if (!img) return; // Kör inte vidare om bilden inte finns!
+
         const rect = introText.getBoundingClientRect();
         const windowHeight = window.innerHeight;
 
@@ -296,6 +301,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const elements = document.querySelectorAll(".scroll-animation");
 
     function checkScroll() {
+
+        const img = document.querySelector('.blur-on-scroll');
+        if (!img) return; // Kör inte vidare om bilden inte finns!
+
+
         elements.forEach(element => {
             const rect = element.getBoundingClientRect();
             const windowHeight = window.innerHeight;

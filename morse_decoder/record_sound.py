@@ -23,6 +23,9 @@ class Record:
         # Kontrollera om mappen 'audio' finns, annars skapa den
         if not os.path.exists('morse_decoder/audio/'):
             os.makedirs('morse_decoder/audio/')
+        # Ta bort existerande fil om den finns
+        if os.path.exists(self.audio_filename):
+            os.remove(self.audio_filename)
 
         # Spela in ljud från mikrofonen
         print("Recording sound...")
