@@ -1,7 +1,7 @@
-Flask
-Flask-Bootstrap
-Flask-WTF
-Flask-CKEditor
+flask
+bootstrap-flask
+flask-wtf
+flask-ckeditor
 soundfile
 numpy
 wtforms
