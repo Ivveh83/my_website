@@ -93,14 +93,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         console.log("Sending audio file with form data...");
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
 
         fetch("/morse_decoder", {
             method: "POST",
             body: formData
         })
         .then(response => response.text()) // Flask returnerar HTML
-        .then(html => {
-            document.body.innerHTML = html; // Ladda om sidan med svaret
+        .then(responseText => {
+            document.getElementById("text").innerHTML = responseText;
         })
         .catch(error => console.error("Error uploading audio:", error));
     }
