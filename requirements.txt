@@ -11,3 +11,4 @@ matplotlib
 sounddevice
 scipy
 librosa
+bleach
