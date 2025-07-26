@@ -5,6 +5,23 @@
 */
 //console.log("JavaScript file is loaded.");
 
+let recordingInterval = null; // För att spara animationens interval-ID
+
+function showRecordingAnimation(text) {
+    const el = document.getElementById("text");
+    let dots = 0;
+    el.innerHTML = `<span class="rec-txt">${text}</span><span class="rec-dots"></span>`;
+    const dotEl = el.querySelector('.rec-dots');
+    recordingInterval = setInterval(() => {
+        dots = (dots + 1) % 4;
+        dotEl.textContent = ".".repeat(dots);
+    }, 500);
+}
+
+function stopRecordingAnimation() {
+    clearInterval(recordingInterval);
+    recordingInterval = null;
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("morseForm");
@@ -28,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (choiceInput && choiceInput.value === "analyze") {
             console.log("Analyze chosen, starting recording...");
+            showRecordingAnimation("Recording");
+
             startRecording(); // Starta inspelning om "analyze" är valt
         } else {
             console.log("Play chosen, submitting form...");
@@ -68,7 +87,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function sendAudioFile() {
-        
+
+        showRecordingAnimation("Analyzing")
         const audioBlob = new Blob(recordedChunks, { type: "audio/wav" });
         const formData = new FormData();
         formData.append("audio", audioBlob, "audio_recording.wav");
@@ -104,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.text()) // Flask returnerar HTML
         .then(responseText => {
+            stopRecordingAnimation()
             document.getElementById("text").innerHTML = responseText;
         })
         .catch(error => console.error("Error uploading audio:", error));
@@ -359,11 +380,3 @@ CKEDITOR.on('instanceReady', function(event) {
     editorInner.setStyle('margin', '0');
     editorInner.setStyle('border', '1px solid #FFFF00');  // Ändra till önskad border
 });
-
-
-
-
-
-
-
-

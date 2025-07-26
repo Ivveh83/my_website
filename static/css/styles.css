@@ -11523,3 +11523,19 @@ input[type="radio"]:checked {
 .address strong {
   font-size: 1.2rem;
 }
+
+#text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* eller så mycket du vill för centrering */
+    text-align: center;
+}
+.rec-txt {
+    margin-right: 0.4em;
+}
+.rec-dots {
+    display: inline-block;
+    min-width: 1em;
+    text-align: left;
+}
