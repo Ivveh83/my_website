@@ -73,7 +73,7 @@ def contact():
             )
         return render_template("contact.html", form=PostForm(), text="Message successfully delivered, I'll get back to you ASAP!")
 
-    return render_template("contact.html", form=form, text="Don't be a Stranger ...")
+    return render_template("contact.html", form=form, text="Don't be a stranger... 👽")
 
 # Morse decoder: ingen WTForms – manuell CSRF-validering
 @app.route("/morse_decoder", methods=["GET", "POST"])
@@ -100,7 +100,7 @@ def morse_decoder():
 
         # Data från FormData (JS) eller vanliga POST-fält
         choice = request.form.get("choice") or request.values.get("choice")
-        text = request.form.get("text")
+        text = request.form.get("text_data")
         recording_time = request.form.get("recording_time")
 
         run = Run(choice, text or "")

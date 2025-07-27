@@ -203,18 +203,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-//document.addEventListener("DOMContentLoaded", function () {
-//    const image = document.querySelector(".blur-on-scroll");
-//
-//    window.addEventListener("scroll", function () {
-//        const scrollPosition = window.scrollY;
-//        if (scrollPosition > 250) {  // Justera detta värde beroende på när du vill att effekten ska slå in
-//            image.classList.add("scrolled");
-//        } else {
-//            image.classList.remove("scrolled");
-//        }
-//    });
-//});
+document.addEventListener("DOMContentLoaded", function () {
+    const image = document.querySelector(".blur-on-scroll");
+
+    window.addEventListener("scroll", function () {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition > 250) {  // Justera detta värde beroende på när du vill att effekten ska slå in
+            image.classList.add("scrolled");
+        } else {
+            image.classList.remove("scrolled");
+        }
+    });
+});
 
 document.addEventListener("DOMContentLoaded", function () {
     const image = document.querySelector('.blur-on-scroll');

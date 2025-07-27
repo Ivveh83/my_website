@@ -12,7 +12,13 @@
                         <div class="bg-faded p-5 d-flex ms-auto rounded glow-effect custom-gradient-bg">
                             <h2 class="section-heading mb-0">
                                 <span id="text" class="section-heading-lower">{{ text|safe }}</span>
-                                <span id="text_two" class="section-heading-upper">For Play Up, write your text in the field 👇 <br> For Analyzing Morse, choose how many seconds to record 👇</span>
+                                <span id="text_two" class="section-heading-upper">
+                                    <br>👉 To convert **Text to Morse**: press "Play", type your message, and click Submit.
+                                    <br><br>👉 To convert **Morse to Text**: choose how many seconds to record (add ~5 extra seconds for best results), press Submit, and then start recording 🎙️
+                                    <br><br>📌 **Tip!** Record the Morse Code using your mobile device 📱
+                                    <br>Then send the recording along with the 🌐 link to this page to someone, and ask them to analyze it 🕵️‍♂️
+                                    <br>⏳ Don't forget: recordings should be no longer than **25 seconds** ⏱️
+                                </span>
                             </h2>
                         </div>
                     </div>
@@ -25,34 +31,46 @@
                              style="margin-top: 100px;">
                             <div class="form-control" style="border:none; background:transparent;">
                                 <input type="radio" id="play" name="choice" value="play"
-                                    {% if values.choice=='play' %}checked{% endif %}>
+                                       {% if values.choice=='play' %}checked{% endif %}>
                                 <label for="play">Play</label>
                                 <input type="radio" id="analyze" name="choice" value="analyze"
-                                    {% if values.choice=='analyze' %}checked{% endif %}>
+                                       {% if values.choice=='analyze' %}checked{% endif %}>
                                 <label for="analyze">Analyze</label>
                             </div>
-                            {% if errors.choice %}<div class="text-danger">{{ errors.choice }}</div>{% endif %}
+                            {% if errors.choice %}
+                            <div class="text-danger">{{ errors.choice }}</div>
+                            {% endif %}
                         </div>
 
                         <!-- Dropdown för recording_time -->
                         <div id="recording-time-container" class="glow-effect-input glow-effect product-item-title left"
                              style="margin-top: 40px;">
                             <select name="recording_time" id="recording_time" class="form-control">
-                                <option value="5" {% if values.recording_time=='5' %}selected{% endif %}>5 sekunder</option>
-                                <option value="10" {% if values.recording_time=='10' %}selected{% endif %}>10 sekunder</option>
-                                <option value="15" {% if values.recording_time=='15' %}selected{% endif %}>15 sekunder</option>
-                                <option value="20" {% if values.recording_time=='20' %}selected{% endif %}>20 sekunder</option>
-                                <option value="25" {% if values.recording_time=='25' %}selected{% endif %}>25 sekunder</option>
-                                <option value="30" {% if values.recording_time=='30' %}selected{% endif %}>30 sekunder</option>
+                                <option value="5" {% if values.recording_time=='5' %}selected{% endif %}>5 sekunder
+                                </option>
+                                <option value="10" {% if values.recording_time=='10' %}selected{% endif %}>10 sekunder
+                                </option>
+                                <option value="15" {% if values.recording_time=='15' %}selected{% endif %}>15 sekunder
+                                </option>
+                                <option value="20" {% if values.recording_time=='20' %}selected{% endif %}>20 sekunder
+                                </option>
+                                <option value="25" {% if values.recording_time=='25' %}selected{% endif %}>25 sekunder
+                                </option>
+                                <option value="30" {% if values.recording_time=='30' %}selected{% endif %}>30 sekunder
+                                </option>
                             </select>
-                            {% if errors.recording_time %}<div class="text-danger">{{ errors.recording_time }}</div>{% endif %}
+                            {% if errors.recording_time %}
+                            <div class="text-danger">{{ errors.recording_time }}</div>
+                            {% endif %}
                         </div>
 
                         <!-- Textfält för morse-text -->
                         <div class="glow-effect-input glow-effect product-item-title right" style="margin-top: 40px">
                             <input type="text" class="form-control" name="text_data" id="text_data"
                                    placeholder="Write your text here..." value="{{ values.text or '' }}">
-                            {% if errors.text %}<div class="text-danger">{{ errors.text }}</div>{% endif %}
+                            {% if errors.text %}
+                            <div class="text-danger">{{ errors.text }}</div>
+                            {% endif %}
                         </div>
 
                         <button id="submit-btn" type="submit" class="btn btn-primary" style="margin-top: 10px">Submit
