@@ -1,24 +1,9 @@
-from morse_decoder.write import Write
-from morse_decoder.play import Play
 from morse_decoder.record_sound import Record
 from  morse_decoder.analyze import Analyze
-import time
 
 class Run:
-    def __init__(self, choice, text, record_time = 10):
+    def __init__(self, choice):
         self.choice = choice
-        self.text = text if text else ""  # 🔹 Se till att text aldrig är None
-        self.writing_text = Write()
-        self.text_to_morse = self.writing_text.write(self.text)
-        # print(f"Morse Code: {text_to_morse}")
-
-
-    def play(self):
-
-
-
-        play_text = Play()
-        play_text.play(self.text)
 
     def analyze(self):
         record = Record()
