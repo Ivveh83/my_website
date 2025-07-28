@@ -23,6 +23,56 @@ function stopRecordingAnimation() {
     recordingInterval = null;
 }
 
+// Spela upp hela textsträngen bokstav för bokstav, ljuden efter varandra!
+function playMorseText(text) {
+    const chars = text.toUpperCase().split("");
+    let i = 0;
+
+    function playNext() {
+        if (i >= chars.length) return;
+        const char = chars[i];
+
+        if (char === " ") {
+            i++;
+            setTimeout(playNext, 700); // Längre paus vid mellanslag
+        } else {
+            let fileName = "";
+            if (char === "?") fileName = "question_mark.wav";
+            else fileName = `${char}.wav`;
+
+            const audio = new Audio(`/static/wav_files/${fileName}`);
+            audio.onended = function () {
+                i++;
+                setTimeout(playNext, 350); // Kort paus mellan tecken
+            };
+            audio.play();
+        }
+    }
+    playNext();
+}
+
+function updateText(text) {
+const morseCodeDict = {
+        'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.',
+        'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
+        'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---',
+        'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+        'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--',
+        'Z': '--..', 'Å': '.--.-', 'Ä': '.-.-', 'Ö': '---.',
+        '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
+        '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----',
+        '.': '.-.-.-', ',': '--..--', '?': '..--..', '!': '-.-.--', ' ': '/'
+    }
+
+    let textAsList = text.toUpperCase().split("");
+    let morseAsList = []
+    for (let char of textAsList) {
+      morseAsList.push(morseCodeDict[char]);
+    }
+    document.getElementById("text").innerHTML = `Text: ${text}<br>Morse Code: ${morseAsList.join(" ")}`;
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("morseForm");
     const recordingTimeInput = document.getElementById("recording_time"); // Hämta dropdown
@@ -43,17 +93,27 @@ document.addEventListener("DOMContentLoaded", function () {
         const choiceInput = document.querySelector('input[name="choice"]:checked');
         console.log("Form submitted, selected choice: ", choiceInput ? choiceInput.value : "None");
 
-        if (choiceInput && choiceInput.value === "analyze") {
-            console.log("Analyze chosen, starting recording...");
-            showRecordingAnimation("Recording");
-
-            startRecording(); // Starta inspelning om "analyze" är valt
-        } else {
-            console.log("Play chosen, submitting form...");
-            setTimeout(() => {
-                form.submit(); // Skicka formuläret manuellt efter en kort fördröjning
-            }, 100); // Fördröj formulärskickningen så att preventDefault får effekt
+        if (choiceInput && choiceInput.value === "play") {
+        const userInputElement = document.getElementById("text_data");
+        console.log(userInputElement);
+        let userInput = "";
+        if (userInputElement) {
+            userInput = userInputElement.value.trim();
+            console.log("User input (text_data):", userInput); // för felsökning
+            // Du kan nu använda userInput för att t.ex. skicka vidare i AJAX eller bearbeta det innan submit...
+            // Sätt igång uppspelningen
+            updateText(userInput);
+            playMorseText(userInput);
         }
+//        setTimeout(() => {
+//            form.submit();
+//        }, 100); // 100 ms fördröjning är kvar för båda valen
+    } else if (choiceInput && choiceInput.value === "analyze") {
+        console.log("Analyze chosen, starting recording...");
+        showRecordingAnimation("Recording");
+        startRecording();
+    }
+
     });
 
     function startRecording() {
@@ -117,7 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(key, value);
         }
 
-
         fetch("/morse_decoder", {
             method: "POST",
             body: formData
@@ -130,10 +189,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Error uploading audio:", error));
     }
 });
-
-
-
-
 
 // Funktion som genererar partiklar från bildens kanter
 function generateParticles() {

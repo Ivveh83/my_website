@@ -1,14 +1,14 @@
 import os
 import secrets
-import threading
 import smtplib
 import subprocess
+
 import soundfile as sf
 import numpy as np
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor, CKEditorField
-from morse_decoder.main import Run
+from morse_decoder.run import Run
 from wtforms import EmailField, SubmitField, StringField, RadioField, SelectField
 from wtforms.validators import DataRequired, Length
 
@@ -100,22 +100,10 @@ def morse_decoder():
 
         # Data från FormData (JS) eller vanliga POST-fält
         choice = request.form.get("choice") or request.values.get("choice")
-        text = request.form.get("text_data")
-        recording_time = request.form.get("recording_time")
 
-        run = Run(choice, text or "")
+        run = Run(choice)
 
-        if choice == "play":
-            morse_code = run.text_to_morse
-            threading.Thread(target=run.play).start()
-            return render_template(
-                "morse_decoder.html",
-                text=f"Text: {text}<br>Morse Code: {morse_code}",
-                values=values,
-                errors=errors
-            )
-
-        elif choice == "analyze":
+        if choice == "analyze":
             os.makedirs(UPLOAD_FOLDER, exist_ok=True)
             if "audio" in request.files:
                 audio_file = request.files["audio"]
